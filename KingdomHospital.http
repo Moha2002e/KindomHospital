@@ -1,0 +1,189 @@
+@KingdomHospital_HostAddress = http://localhost:5039
+
+### SPECIALTIES
+GET {{KingdomHospital_HostAddress}}/api/specialties
+Accept: application/json
+
+###
+GET {{KingdomHospital_HostAddress}}/api/specialties/1
+Accept: application/json
+
+###
+
+### DOCTORS
+GET {{KingdomHospital_HostAddress}}/api/doctors
+Accept: application/json
+
+###
+GET {{KingdomHospital_HostAddress}}/api/doctors/1
+Accept: application/json
+
+###
+POST {{KingdomHospital_HostAddress}}/api/doctors
+Content-Type: application/json
+
+{
+  "specialtyId": 1,
+  "lastName": "Nouveau",
+  "firstName": "Médecin"
+}
+
+###
+PUT {{KingdomHospital_HostAddress}}/api/doctors/1
+Content-Type: application/json
+
+{
+  "specialtyId": 1,
+  "lastName": "Modifié",
+  "firstName": "Médecin"
+}
+
+###
+
+### PATIENTS
+GET {{KingdomHospital_HostAddress}}/api/patients
+Accept: application/json
+
+###
+GET {{KingdomHospital_HostAddress}}/api/patients/1
+Accept: application/json
+
+###
+POST {{KingdomHospital_HostAddress}}/api/patients
+Content-Type: application/json
+
+{
+  "lastName": "Nouveau",
+  "firstName": "Patient",
+  "birthDate": "1990-01-01"
+}
+
+###
+PUT {{KingdomHospital_HostAddress}}/api/patients/1
+Content-Type: application/json
+
+{
+  "lastName": "Modifié",
+  "firstName": "Patient",
+  "birthDate": "1990-01-01"
+}
+
+###
+DELETE {{KingdomHospital_HostAddress}}/api/patients/1
+
+###
+
+### CONSULTATIONS
+GET {{KingdomHospital_HostAddress}}/api/consultations
+Accept: application/json
+
+###
+GET {{KingdomHospital_HostAddress}}/api/consultations/1
+Accept: application/json
+
+###
+POST {{KingdomHospital_HostAddress}}/api/consultations
+Content-Type: application/json
+
+{
+  "doctorId": 1,
+  "patientId": 1,
+  "date": "2025-11-27",
+  "hour": "10:00",
+  "reason": "Consultation de routine"
+}
+
+###
+PUT {{KingdomHospital_HostAddress}}/api/consultations/1
+Content-Type: application/json
+
+{
+  "doctorId": 1,
+  "patientId": 1,
+  "date": "2025-11-27",
+  "hour": "14:00",
+  "reason": "Consultation modifiée"
+}
+
+###
+DELETE {{KingdomHospital_HostAddress}}/api/consultations/1
+
+###
+
+### MEDICAMENTS
+GET {{KingdomHospital_HostAddress}}/api/medicaments
+Accept: application/json
+
+###
+GET {{KingdomHospital_HostAddress}}/api/medicaments/1
+Accept: application/json
+
+###
+POST {{KingdomHospital_HostAddress}}/api/medicaments
+Content-Type: application/json
+
+{
+  "name": "Nouveau Médicament",
+  "dosageForm": "Comprimé",
+  "strength": "250mg",
+  "atcCode": "A01AA01"
+}
+
+###
+
+### ORDONNANCES
+GET {{KingdomHospital_HostAddress}}/api/ordonnances
+Accept: application/json
+
+###
+GET {{KingdomHospital_HostAddress}}/api/ordonnances/1
+Accept: application/json
+
+###
+POST {{KingdomHospital_HostAddress}}/api/ordonnances
+Content-Type: application/json
+
+{
+  "doctorId": 1,
+  "patientId": 1,
+  "consultationId": null,
+  "date": "2025-11-27",
+  "notes": "Ordonnance de test",
+  "lignes": [
+    {
+      "medicamentId": 1,
+      "dosage": "500mg",
+      "frequency": "2 fois par jour",
+      "duration": "7 jours",
+      "quantity": 14,
+      "instructions": "Prendre après les repas"
+    }
+  ]
+}
+
+###
+PUT {{KingdomHospital_HostAddress}}/api/ordonnances/1
+Content-Type: application/json
+
+{
+  "doctorId": 1,
+  "patientId": 1,
+  "consultationId": null,
+  "date": "2025-11-27",
+  "notes": "Ordonnance modifiée",
+  "lignes": [
+    {
+      "medicamentId": 1,
+      "dosage": "500mg",
+      "frequency": "3 fois par jour",
+      "duration": "5 jours",
+      "quantity": 15,
+      "instructions": "Prendre avant les repas"
+    }
+  ]
+}
+
+###
+DELETE {{KingdomHospital_HostAddress}}/api/ordonnances/1
+
+###
