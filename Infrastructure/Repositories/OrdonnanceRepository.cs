@@ -52,13 +52,13 @@ public class OrdonnanceRepository : IOrdonnanceRepository
 
     public async Task<Ordonnance> UpdateAsync(Ordonnance ordonnance)
     {
-        // Supprimer les anciennes lignes
+        
         var existingLignes = await _context.OrdonnanceLignes
             .Where(ol => ol.OrdonnanceId == ordonnance.Id)
             .ToListAsync();
         _context.OrdonnanceLignes.RemoveRange(existingLignes);
 
-        // Mettre à jour l'ordonnance et ajouter les nouvelles lignes
+        
         _context.Ordonnances.Update(ordonnance);
         await _context.SaveChangesAsync();
         

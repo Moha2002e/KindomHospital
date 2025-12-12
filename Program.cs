@@ -4,20 +4,21 @@ using KingdomHospital.Application.Repositories;
 using KingdomHospital.Application.Services;
 using KingdomHospital.Infrastructure;
 using KingdomHospital.Infrastructure.Repositories;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
-/// <summary>
-/// Point d'entrée de l'application KingdomHospital
-/// Configure les services, la base de données et démarre l'API REST
-/// </summary>
+
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddSerilog((services, lc) =>
     lc.ReadFrom.Configuration(builder.Configuration));
 
 builder.Services.AddDbContext<KingdomHospitalDbContext>(options =>
-    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -53,12 +54,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-// Only use HTTPS redirection if HTTPS is actually configured
-if (app.Configuration["ASPNETCORE_URLS"]?.Contains("https://") == true || 
-    app.Environment.IsDevelopment())
-{
-    app.UseHttpsRedirection();
-}
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
@@ -93,9 +89,9 @@ using (var scope = app.Services.CreateScope())
                     logger.LogInformation("Toutes les migrations sont déjà appliquées.");
                 }
             }
-            catch (Exception dbEx)
+            catch (SqlException sqlEx) when (sqlEx.Number == 2714 || sqlEx.Number == 2715)
             {
-                logger.LogWarning(dbEx, "Une erreur s'est produite lors de la vérification des migrations. Continuation...");
+                logger.LogWarning("Les objets de base de données existent déjà. Continuation...");
             }
         }
         

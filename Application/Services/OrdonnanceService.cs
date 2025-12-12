@@ -70,31 +70,31 @@ public class OrdonnanceService
             throw new ArgumentException($"La date de l'ordonnance ne peut pas être postérieure à {today.AddDays(maxFutureDays):yyyy-MM-dd}.");
         }
         
-        // Vérifier que le médecin existe
+        
         if (!await _doctorRepository.ExistsAsync(dto.DoctorId))
         {
             throw new ArgumentException($"Le médecin avec l'ID {dto.DoctorId} n'existe pas.");
         }
 
-        // Vérifier que le patient existe
+        
         if (!await _patientRepository.ExistsAsync(dto.PatientId))
         {
             throw new ArgumentException($"Le patient avec l'ID {dto.PatientId} n'existe pas.");
         }
 
-        // Vérifier la consultation si fournie
+        
         if (dto.ConsultationId.HasValue && !await _consultationRepository.ExistsAsync(dto.ConsultationId.Value))
         {
             throw new ArgumentException($"La consultation avec l'ID {dto.ConsultationId} n'existe pas.");
         }
 
-        // Règle métier : Une ordonnance doit avoir au moins 1 ligne
+        
         if (dto.Lignes == null || !dto.Lignes.Any())
         {
             throw new ArgumentException("Une ordonnance doit contenir au moins une ligne de médicament.");
         }
 
-        // Vérifier que tous les médicaments existent et valider les lignes
+        
         var validatedLignes = new List<CreateOrdonnanceLigneDto>();
         foreach (var ligne in dto.Lignes)
         {
@@ -195,31 +195,31 @@ public class OrdonnanceService
             throw new ArgumentException($"La date de l'ordonnance ne peut pas être postérieure à {today.AddDays(maxFutureDays):yyyy-MM-dd}.");
         }
 
-        // Vérifier que le médecin existe
+        
         if (!await _doctorRepository.ExistsAsync(dto.DoctorId))
         {
             throw new ArgumentException($"Le médecin avec l'ID {dto.DoctorId} n'existe pas.");
         }
 
-        // Vérifier que le patient existe
+        
         if (!await _patientRepository.ExistsAsync(dto.PatientId))
         {
             throw new ArgumentException($"Le patient avec l'ID {dto.PatientId} n'existe pas.");
         }
 
-        // Vérifier la consultation si fournie
+        
         if (dto.ConsultationId.HasValue && !await _consultationRepository.ExistsAsync(dto.ConsultationId.Value))
         {
             throw new ArgumentException($"La consultation avec l'ID {dto.ConsultationId} n'existe pas.");
         }
 
-        // Règle métier : Une ordonnance doit avoir au moins 1 ligne
+        
         if (dto.Lignes == null || !dto.Lignes.Any())
         {
             throw new ArgumentException("Une ordonnance doit contenir au moins une ligne de médicament.");
         }
 
-        // Vérifier que tous les médicaments existent et valider les lignes
+        
         var validatedLignes = new List<CreateOrdonnanceLigneDto>();
         foreach (var ligne in dto.Lignes)
         {

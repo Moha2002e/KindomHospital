@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KingdomHospital.Presentation.Controllers;
 
-/// <summary>
-/// Contrôleur pour gérer les consultations
-/// </summary>
+
+
+
 [ApiController]
 [Route("api/[controller]")]
 public class ConsultationsController : ControllerBase
@@ -15,18 +15,18 @@ public class ConsultationsController : ControllerBase
     private readonly ConsultationService _service;
     private readonly ILogger<ConsultationsController> _logger;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du contrôleur
-    /// </summary>
+    
+    
+    
     public ConsultationsController(ConsultationService service, ILogger<ConsultationsController> logger)
     {
         _service = service;
         _logger = logger;
     }
 
-    /// <summary>
-    /// Liste toutes les consultations (avec filtres optionnels)
-    /// </summary>
+    
+    
+    
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<ConsultationDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<ConsultationDto>>> GetAll([FromQuery] int? doctorId, [FromQuery] int? patientId, [FromQuery] DateOnly? from, [FromQuery] DateOnly? to)
@@ -41,9 +41,9 @@ public class ConsultationsController : ControllerBase
         return Ok(allConsultations);
     }
 
-    /// <summary>
-    /// Détail d'une consultation
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ConsultationDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -56,9 +56,9 @@ public class ConsultationsController : ControllerBase
         return Ok(consultation);
     }
 
-    /// <summary>
-    /// Crée une consultation
-    /// </summary>
+    
+    
+    
     [HttpPost]
     [ProducesResponseType(typeof(ConsultationDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -78,9 +78,9 @@ public class ConsultationsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Met à jour une consultation
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(ConsultationDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -104,9 +104,9 @@ public class ConsultationsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Supprime une consultation
-    /// </summary>
+    
+    
+    
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -119,9 +119,9 @@ public class ConsultationsController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>
-    /// Liste les ordonnances liées à une consultation
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/ordonnances")]
     [ProducesResponseType(typeof(IEnumerable<OrdonnanceDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -135,9 +135,9 @@ public class ConsultationsController : ControllerBase
         return Ok(ordonnances);
     }
 
-    /// <summary>
-    /// Crée une ordonnance rattachée à une consultation
-    /// </summary>
+    
+    
+    
     [HttpPost("{id}/ordonnances")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

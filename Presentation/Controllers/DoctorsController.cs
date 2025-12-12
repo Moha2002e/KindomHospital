@@ -5,9 +5,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace KingdomHospital.Presentation.Controllers;
 
-/// <summary>
-/// Contrôleur pour gérer les médecins
-/// </summary>
+
+
+
 [ApiController]
 [Route("api/[controller]")]
 public class DoctorsController : ControllerBase
@@ -15,18 +15,18 @@ public class DoctorsController : ControllerBase
     private readonly DoctorService _service;
     private readonly ILogger<DoctorsController> _logger;
 
-    /// <summary>
-    /// Initialise une nouvelle instance du contrôleur
-    /// </summary>
+    
+    
+    
     public DoctorsController(DoctorService service, ILogger<DoctorsController> logger)
     {
         _service = service;
         _logger = logger;
     }
 
-    /// <summary>
-    /// Liste tous les médecins
-    /// </summary>
+    
+    
+    
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<DoctorDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<DoctorDto>>> GetAll()
@@ -35,9 +35,9 @@ public class DoctorsController : ControllerBase
         return Ok(doctors);
     }
 
-    /// <summary>
-    /// Détail d'un médecin
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,9 +50,9 @@ public class DoctorsController : ControllerBase
         return Ok(doctor);
     }
 
-    /// <summary>
-    /// Crée un médecin
-    /// </summary>
+    
+    
+    
     [HttpPost]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -72,9 +72,9 @@ public class DoctorsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Met à jour un médecin
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -98,9 +98,9 @@ public class DoctorsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Renvoie la spécialité d'un médecin
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/specialty")]
     [ProducesResponseType(typeof(SpecialtyDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -118,9 +118,9 @@ public class DoctorsController : ControllerBase
         return Ok(specialty);
     }
 
-    /// <summary>
-    /// Change la spécialité d'un médecin
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}/specialty/{specialtyId}")]
     [ProducesResponseType(typeof(DoctorDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -148,9 +148,9 @@ public class DoctorsController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Liste les consultations d'un médecin
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/consultations")]
     [ProducesResponseType(typeof(IEnumerable<ConsultationDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -164,9 +164,9 @@ public class DoctorsController : ControllerBase
         return Ok(consultations);
     }
 
-    /// <summary>
-    /// Liste les patients consultés par un médecin
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/patients")]
     [ProducesResponseType(typeof(IEnumerable<PatientDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -180,9 +180,9 @@ public class DoctorsController : ControllerBase
         return Ok(patients);
     }
 
-    /// <summary>
-    /// Liste les ordonnances émises par un médecin
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/ordonnances")]
     [ProducesResponseType(typeof(IEnumerable<OrdonnanceDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

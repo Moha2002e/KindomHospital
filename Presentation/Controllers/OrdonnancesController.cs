@@ -18,9 +18,9 @@ public class OrdonnancesController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Liste toutes les ordonnances (avec filtres optionnels)
-    /// </summary>
+    
+    
+    
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<OrdonnanceDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<OrdonnanceDto>>> GetAll([FromQuery] int? doctorId, [FromQuery] int? patientId, [FromQuery] DateOnly? from, [FromQuery] DateOnly? to)
@@ -35,9 +35,9 @@ public class OrdonnancesController : ControllerBase
         return Ok(allOrdonnances);
     }
 
-    /// <summary>
-    /// Détail d'une ordonnance
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -50,9 +50,9 @@ public class OrdonnancesController : ControllerBase
         return Ok(ordonnance);
     }
 
-    /// <summary>
-    /// Crée une ordonnance
-    /// </summary>
+    
+    
+    
     [HttpPost]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -72,9 +72,9 @@ public class OrdonnancesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Met à jour une ordonnance
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -98,9 +98,9 @@ public class OrdonnancesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Supprime une ordonnance
-    /// </summary>
+    
+    
+    
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -113,9 +113,9 @@ public class OrdonnancesController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>
-    /// Rattache une ordonnance à une consultation
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}/consultation/{consultationId}")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -162,9 +162,9 @@ public class OrdonnancesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Détache une ordonnance de sa consultation
-    /// </summary>
+    
+    
+    
     [HttpDelete("{id}/consultation")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -201,9 +201,9 @@ public class OrdonnancesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Liste toutes les lignes d'une ordonnance
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/lignes")]
     [ProducesResponseType(typeof(IEnumerable<OrdonnanceLigneDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -217,9 +217,9 @@ public class OrdonnancesController : ControllerBase
         return Ok(lignes);
     }
 
-    /// <summary>
-    /// Détail d'une ligne d'ordonnance
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/lignes/{ligneId}")]
     [ProducesResponseType(typeof(OrdonnanceLigneDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -236,9 +236,9 @@ public class OrdonnancesController : ControllerBase
         return Ok(ligne);
     }
 
-    /// <summary>
-    /// Ajoute une ou plusieurs lignes à une ordonnance
-    /// </summary>
+    
+    
+    
     [HttpPost("{id}/lignes")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -287,9 +287,9 @@ public class OrdonnancesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Met à jour une ligne d'ordonnance
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}/lignes/{ligneId}")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -347,9 +347,9 @@ public class OrdonnancesController : ControllerBase
         }
     }
 
-    /// <summary>
-    /// Supprime une ligne d'ordonnance
-    /// </summary>
+    
+    
+    
     [HttpDelete("{id}/lignes/{ligneId}")]
     [ProducesResponseType(typeof(OrdonnanceDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

@@ -2,16 +2,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace KingdomHospital.Presentation.Controllers;
 
-/// <summary>
-/// Contrôleur pour la page d'accueil de l'API
-/// </summary>
+
+
+
 [ApiController]
 [Route("/")]
 public class HomeController : ControllerBase
 {
-    /// <summary>
-    /// Point d'entrée de l'API Kingdom Hospital
-    /// </summary>
+    
+    
+    
     [HttpGet]
     public IActionResult Get()
     {

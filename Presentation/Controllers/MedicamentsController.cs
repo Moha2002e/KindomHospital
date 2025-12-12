@@ -17,9 +17,9 @@ public class MedicamentsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Liste tous les médicaments
-    /// </summary>
+    
+    
+    
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<MedicamentDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<MedicamentDto>>> GetAll()
@@ -28,9 +28,9 @@ public class MedicamentsController : ControllerBase
         return Ok(medicaments);
     }
 
-    /// <summary>
-    /// Détail d'un médicament
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(MedicamentDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,9 +43,9 @@ public class MedicamentsController : ControllerBase
         return Ok(medicament);
     }
 
-    /// <summary>
-    /// Crée un médicament
-    /// </summary>
+    
+    
+    
     [HttpPost]
     [ProducesResponseType(typeof(MedicamentDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -58,9 +58,9 @@ public class MedicamentsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = medicament.Id }, medicament);
     }
 
-    /// <summary>
-    /// Liste les ordonnances contenant un médicament
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/ordonnances")]
     [ProducesResponseType(typeof(IEnumerable<OrdonnanceDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]

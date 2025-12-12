@@ -17,9 +17,9 @@ public class PatientsController : ControllerBase
         _logger = logger;
     }
 
-    /// <summary>
-    /// Liste tous les patients
-    /// </summary>
+    
+    
+    
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<PatientDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IEnumerable<PatientDto>>> GetAll()
@@ -28,9 +28,9 @@ public class PatientsController : ControllerBase
         return Ok(patients);
     }
 
-    /// <summary>
-    /// Détail d'un patient
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -43,9 +43,9 @@ public class PatientsController : ControllerBase
         return Ok(patient);
     }
 
-    /// <summary>
-    /// Crée un patient
-    /// </summary>
+    
+    
+    
     [HttpPost]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -58,9 +58,9 @@ public class PatientsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = patient.Id }, patient);
     }
 
-    /// <summary>
-    /// Met à jour un patient
-    /// </summary>
+    
+    
+    
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(PatientDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -77,9 +77,9 @@ public class PatientsController : ControllerBase
         return Ok(patient);
     }
 
-    /// <summary>
-    /// Supprime un patient
-    /// </summary>
+    
+    
+    
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -92,9 +92,9 @@ public class PatientsController : ControllerBase
         return NoContent();
     }
 
-    /// <summary>
-    /// Liste les consultations d'un patient
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/consultations")]
     [ProducesResponseType(typeof(IEnumerable<ConsultationDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -108,9 +108,9 @@ public class PatientsController : ControllerBase
         return Ok(consultations);
     }
 
-    /// <summary>
-    /// Liste les ordonnances d'un patient
-    /// </summary>
+    
+    
+    
     [HttpGet("{id}/ordonnances")]
     [ProducesResponseType(typeof(IEnumerable<OrdonnanceDto>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
