@@ -1,5 +1,9 @@
 @KingdomHospital_HostAddress = http://localhost:5039
 
+### ==================================================================================
+### 1. ENDPOINTS CRUD PAR ENTITE
+### ==================================================================================
+
 ### SPECIALTIES
 GET {{KingdomHospital_HostAddress}}/api/specialties
 Accept: application/json
@@ -7,8 +11,6 @@ Accept: application/json
 ###
 GET {{KingdomHospital_HostAddress}}/api/specialties/1
 Accept: application/json
-
-###
 
 ### DOCTORS
 GET {{KingdomHospital_HostAddress}}/api/doctors
@@ -37,8 +39,6 @@ Content-Type: application/json
   "lastName": "Modifié",
   "firstName": "Médecin"
 }
-
-###
 
 ### PATIENTS
 GET {{KingdomHospital_HostAddress}}/api/patients
@@ -69,9 +69,8 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{KingdomHospital_HostAddress}}/api/patients/1
-
-###
+DELETE {{KingdomHospital_HostAddress}}/api/patients/6
+# ID 6 is typically created in seed, or we can delete the one we just created safely if we grab its ID, but for test file we assume specific IDs or sequential runs
 
 ### CONSULTATIONS
 GET {{KingdomHospital_HostAddress}}/api/consultations
@@ -108,8 +107,6 @@ Content-Type: application/json
 ###
 DELETE {{KingdomHospital_HostAddress}}/api/consultations/1
 
-###
-
 ### MEDICAMENTS
 GET {{KingdomHospital_HostAddress}}/api/medicaments
 Accept: application/json
@@ -128,8 +125,6 @@ Content-Type: application/json
   "strength": "250mg",
   "atcCode": "A01AA01"
 }
-
-###
 
 ### ORDONNANCES
 GET {{KingdomHospital_HostAddress}}/api/ordonnances
@@ -184,6 +179,147 @@ Content-Type: application/json
 }
 
 ###
-DELETE {{KingdomHospital_HostAddress}}/api/ordonnances/1
+DELETE {{KingdomHospital_HostAddress}}/api/ordonnances/5
 
-###
+### ==================================================================================
+### 2. ENDPOINTS RELATIONNELS (OBLIGATOIRES)
+### ==================================================================================
+
+### --- SPECIALTIES <-> DOCTORS ---
+
+# 1. Liste les médecins d'une spécialité (Cardiologie - ID 1)
+GET {{KingdomHospital_HostAddress}}/api/specialties/1/doctors
+Accept: application/json
+
+# 2. Renvoie la spécialité d'un médecin (Dr Jean Dupont - ID 1)
+GET {{KingdomHospital_HostAddress}}/api/doctors/1/specialty
+Accept: application/json
+
+# 3. Change la spécialité d'un médecin (Avant: Cardiologie -> Après: Dermatologie ID 2)
+# Vérification Avant
+GET {{KingdomHospital_HostAddress}}/api/doctors/1/specialty
+
+### Modification 
+PUT {{KingdomHospital_HostAddress}}/api/doctors/1/specialty/2
+Accept: application/json
+
+### Vérification Après
+GET {{KingdomHospital_HostAddress}}/api/doctors/1/specialty
+
+### --- DOCTORS <-> CONSULTATIONS / PATIENTS ---
+
+# 4. Liste les consultations d'un médecin
+GET {{KingdomHospital_HostAddress}}/api/doctors/1/consultations
+Accept: application/json
+
+# 5. Liste les patients déjà consultés par un médecin
+GET {{KingdomHospital_HostAddress}}/api/doctors/1/patients
+Accept: application/json
+
+# 6. Liste les ordonnances émises par un médecin (Filtrage optionnel par date)
+GET {{KingdomHospital_HostAddress}}/api/doctors/1/ordonnances?from=2024-01-01&to=2025-12-31
+Accept: application/json
+
+### --- PATIENTS <-> CONSULTATIONS / ORDONNANCES ---
+
+# 7. Liste les consultations d'un patient
+GET {{KingdomHospital_HostAddress}}/api/patients/1/consultations
+Accept: application/json
+
+# 8. Liste les ordonnances d'un patient
+GET {{KingdomHospital_HostAddress}}/api/patients/1/ordonnances
+Accept: application/json
+
+### --- CONSULTATIONS <-> ORDONNANCES ---
+
+# 9. Liste les ordonnances liées à une consultation (ID 1)
+GET {{KingdomHospital_HostAddress}}/api/consultations/1/ordonnances
+Accept: application/json
+
+# 10. Crée une ordonnance rattachée à cette consultation (ID 1)
+POST {{KingdomHospital_HostAddress}}/api/consultations/1/ordonnances
+Content-Type: application/json
+
+{
+  "doctorId": 1,
+  "patientId": 1,
+  "date": "2025-11-27",
+  "notes": "Ordonnance post-consultation",
+  "lignes": [
+    {
+      "medicamentId": 1,
+      "dosage": "1000mg",
+      "frequency": "1 fois par jour",
+      "duration": "3 jours",
+      "quantity": 3,
+      "instructions": "Le matin"
+    }
+  ]
+}
+
+# 11. Rattache une ordonnance existante (ID 2) à une consultation (ID 3)
+PUT {{KingdomHospital_HostAddress}}/api/ordonnances/2/consultation/3
+Accept: application/json
+
+# 12. Détache l'ordonnance (ID 2) de sa consultation
+DELETE {{KingdomHospital_HostAddress}}/api/ordonnances/2/consultation
+Accept: application/json
+
+### --- MEDICAMENTS (Recherche) ---
+
+# 13. Liste des ordonnances où le médicament apparaît (Paracétamol - ID 1)
+GET {{KingdomHospital_HostAddress}}/api/medicaments/1/ordonnances
+Accept: application/json
+
+### --- LIGNES D'ORDONNANCE ---
+
+# 14. Liste toutes les lignes d'une ordonnance (ID 1)
+GET {{KingdomHospital_HostAddress}}/api/ordonnances/1/lignes
+Accept: application/json
+
+# 15. Ajoute une ligne à une ordonnance (ID 1)
+POST {{KingdomHospital_HostAddress}}/api/ordonnances/1/lignes
+Content-Type: application/json
+
+[
+  {
+    "medicamentId": 2,
+    "dosage": "200mg",
+    "frequency": "2 fois par jour",
+    "duration": "5 jours",
+    "quantity": 10,
+    "instructions": "En mangeant"
+  }
+]
+
+# 16. Détail d'une ligne d'ordonnance (Suppose ID 1 existe)
+GET {{KingdomHospital_HostAddress}}/api/ordonnances/1/lignes/1
+Accept: application/json
+
+# 17. Met à jour une ligne (ID 1) de l'ordonnance (ID 1)
+PUT {{KingdomHospital_HostAddress}}/api/ordonnances/1/lignes/1
+Content-Type: application/json
+
+{
+  "medicamentId": 1,
+  "dosage": "1000mg",
+  "frequency": "4 fois par jour",
+  "duration": "2 jours",
+  "quantity": 8,
+  "instructions": "Urgent"
+}
+
+# 18. Supprime une ligne (ID 2 - créée précédemment par exemple ou existante)
+# Note: si l'ID 2 n'existe pas, cela échouera, mais c'est le principe du test
+DELETE {{KingdomHospital_HostAddress}}/api/ordonnances/1/lignes/2
+Accept: application/json
+
+### --- ENDPOINTS UTILITAIRES ---
+
+# 19. Liste filtrée de consultations
+GET {{KingdomHospital_HostAddress}}/api/consultations?doctorId=1&patientId=1
+Accept: application/json
+
+# 20. Liste filtrée d'ordonnances
+GET {{KingdomHospital_HostAddress}}/api/ordonnances?doctorId=1
+Accept: application/json

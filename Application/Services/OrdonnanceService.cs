@@ -133,6 +133,18 @@ public class OrdonnanceService
             ));
         }
 
+        // Intra-ordonnance uniqueness check
+        var duplicates = validatedLignes
+            .GroupBy(l => new { l.MedicamentId, l.Dosage, l.Frequency, l.Duration })
+            .Where(g => g.Count() > 1)
+            .Select(g => g.Key)
+            .ToList();
+
+        if (duplicates.Any())
+        {
+            throw new ArgumentException("Impossible d'ajouter des lignes identiques (Même médicament, dosage, fréquence et durée).");
+        }
+
         if (dto.ConsultationId.HasValue)
         {
             var consultation = await _consultationRepository.GetByIdAsync(dto.ConsultationId.Value);
