@@ -1,24 +1,26 @@
-using System;
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace KingdomHospital.Infrastructure.Migrations
+namespace KingdomHospital.Migrations
 {
-    public partial class Init : Migration
+    /// <inheritdoc />
+    public partial class InitialCreate : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "MEDICAMENT",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DosageForm = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Strength = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    AtcCode = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    DosageForm = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    Strength = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    AtcCode = table.Column<string>(type: "TEXT", maxLength: 20, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,11 +31,11 @@ namespace KingdomHospital.Infrastructure.Migrations
                 name: "PATIENT",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    BirthDate = table.Column<DateOnly>(type: "date", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    BirthDate = table.Column<DateOnly>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,9 +46,9 @@ namespace KingdomHospital.Infrastructure.Migrations
                 name: "SPECIALTY",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -57,11 +59,11 @@ namespace KingdomHospital.Infrastructure.Migrations
                 name: "DOCTOR",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    SpecialtyId = table.Column<int>(type: "int", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    FirstName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    SpecialtyId = table.Column<int>(type: "INTEGER", nullable: false),
+                    LastName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    FirstName = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,13 +80,13 @@ namespace KingdomHospital.Infrastructure.Migrations
                 name: "CONSULTATION",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Hour = table.Column<TimeOnly>(type: "time", nullable: false),
-                    Reason = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DoctorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PatientId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    Hour = table.Column<TimeOnly>(type: "TEXT", nullable: false),
+                    Reason = table.Column<string>(type: "TEXT", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,13 +109,13 @@ namespace KingdomHospital.Infrastructure.Migrations
                 name: "ORDONNANCE",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    DoctorId = table.Column<int>(type: "int", nullable: false),
-                    PatientId = table.Column<int>(type: "int", nullable: false),
-                    ConsultationId = table.Column<int>(type: "int", nullable: true),
-                    Date = table.Column<DateOnly>(type: "date", nullable: false),
-                    Notes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    DoctorId = table.Column<int>(type: "INTEGER", nullable: false),
+                    PatientId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ConsultationId = table.Column<int>(type: "INTEGER", nullable: true),
+                    Date = table.Column<DateOnly>(type: "TEXT", nullable: false),
+                    Notes = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,15 +144,15 @@ namespace KingdomHospital.Infrastructure.Migrations
                 name: "ORDONNANCE_LIGNE",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrdonnanceId = table.Column<int>(type: "int", nullable: false),
-                    MedicamentId = table.Column<int>(type: "int", nullable: false),
-                    Dosage = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Frequency = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Duration = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false),
-                    Instructions = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    OrdonnanceId = table.Column<int>(type: "INTEGER", nullable: false),
+                    MedicamentId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Dosage = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Frequency = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
+                    Duration = table.Column<string>(type: "TEXT", maxLength: 30, nullable: false),
+                    Quantity = table.Column<int>(type: "INTEGER", nullable: false),
+                    Instructions = table.Column<string>(type: "TEXT", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -233,6 +235,7 @@ namespace KingdomHospital.Infrastructure.Migrations
                 unique: true);
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -258,4 +261,3 @@ namespace KingdomHospital.Infrastructure.Migrations
         }
     }
 }
-

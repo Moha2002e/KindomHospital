@@ -1,16 +1,10 @@
-using System.Linq;
 using KingdomHospital.Application.Mappers;
 using KingdomHospital.Application.Repositories;
 using KingdomHospital.Application.Services;
 using KingdomHospital.Infrastructure;
 using KingdomHospital.Infrastructure.Repositories;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
-
-
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +12,7 @@ builder.Services.AddSerilog((services, lc) =>
     lc.ReadFrom.Configuration(builder.Configuration));
 
 builder.Services.AddDbContext<KingdomHospitalDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -55,52 +49,27 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     var logger = services.GetRequiredService<ILogger<Program>>();
-    
+
     try
     {
         var context = services.GetRequiredService<KingdomHospitalDbContext>();
-        
-        if (!context.Database.CanConnect())
-        {
-            logger.LogInformation("Création de la base de données...");
-            context.Database.EnsureCreated();
-        }
-        else
-        {
-            try
-            {
-                var pendingMigrations = context.Database.GetPendingMigrations().ToList();
-                if (pendingMigrations.Any())
-                {
-                    logger.LogInformation("Application des migrations en attente...");
-                    context.Database.Migrate();
-                }
-                else
-                {
-                    logger.LogInformation("Toutes les migrations sont déjà appliquées.");
-                }
-            }
-            catch (SqlException sqlEx) when (sqlEx.Number == 2714 || sqlEx.Number == 2715)
-            {
-                logger.LogWarning("Les objets de base de données existent déjà. Continuation...");
-            }
-        }
-        
+
+        logger.LogInformation("Application des migrations...");
+        context.Database.Migrate();
+
         KingdomHospitalDbContext.Seed(context);
         logger.LogInformation("Base de données initialisée avec succès.");
     }
     catch (Exception ex)
     {
-        logger.LogError(ex, "Une erreur s'est produite lors de l'initialisation de la base de données.");
+        logger.LogError(ex, "Erreur lors de l'initialisation de la base de données.");
     }
 }
 
